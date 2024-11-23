@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Contacts</title>
+</head>
+<body>
+
+    <table>
+        <tr>
+            <th>List of contacts: </th>
+        </tr>
+        <tr>
+            <td class="contactList">
+                <ol>
+                    <li data-th-each="u: ${userList}">
+                        <a data-th-href="${u.value}"><span data-th-text="${u.key}"></span></a>
+                    </li>
+                </ol>
+            </td>
+        </tr>
+    </table>
+    
+</body>
+</html>

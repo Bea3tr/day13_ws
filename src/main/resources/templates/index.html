@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Home</title>
+</head>
+<body>
+
+    <h1>Welcome!</h1>
+    <h2>Please enter your contact details! </h2>
+
+    <form method="POST" action="/contact" data-th-object="${contacts}">
+        <table>
+            <tr>
+                <td>Name: </td>
+                <td>
+                    <input type="text" data-th-field="*{name}">
+                    <div data-th-if="${#fields.hasErrors('name')}"
+                         data-th-errors="*{name}" data-th-errorclass="error">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Email: </td>
+                <td>
+                    <input type="email" data-th-field="*{email}">
+                    <div data-th-if="${#fields.hasErrors('email')}"
+                         data-th-errors="*{email}" data-th-errorclass="error">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Phone Number: </td>
+                <td>
+                    <input type="number" data-th-field="*{phoneNum}">
+                    <div data-th-if="${#fields.hasErrors('phoneNum')}"
+                         data-th-errors="*{phoneNum}" data-th-errorclass="error">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Date of birth: </td>
+                <td>
+                    <input type="date" data-th-field="*{dob}">
+                    <div data-th-if="${#fields.hasErrors('dob')}"
+                         data-th-errors="*{dob}" data-th-errorclass="error">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Submit</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <a href="/contacts">List of contacts</a>
+    
+</body>
+</html>

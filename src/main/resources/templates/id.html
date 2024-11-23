@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title data-th-text="${id}"></title>
+</head>
+<body>
+
+    <ul class="no-bullet">
+        <li class="id-header">Contact ID: <span data-th-text="${id}"></span></li>
+        <li data-th-each="detail: ${contactDetails}">
+            <span data-th-text="${detail.key}"></span>: 
+            <span class="contact-details" data-th-text="${detail.value}"></span>
+        </li>
+    </ul> 
+
+    <div>
+        <a href="/">Home</a>
+    </div>
+        
+</body>
+</html>
