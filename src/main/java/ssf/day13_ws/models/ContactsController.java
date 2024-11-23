@@ -16,6 +16,7 @@ import ssf.day13_ws.Day13WsApplication;
 import static ssf.day13_ws.models.Contacts.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -24,6 +25,8 @@ import java.text.SimpleDateFormat;
 @Controller
 @RequestMapping
 public class ContactsController {
+
+    private static final Logger logger = Logger.getLogger(ContactsController.class.getName());
 
     @PostMapping("/contact")
     public String postContact(Model model,
@@ -40,7 +43,6 @@ public class ContactsController {
             Date currTime = df.parse(df.format(new Date()));
             long diff = currTime.getTime() - dob1.getTime();
             long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-            System.out.println("Days: " + days);
             if(days < 3650L || days > 36500L) {
                 FieldError err = new FieldError("contacts", "dob", "User must be between 10 to 100 years old");
                 bindings.addError(err);
@@ -72,6 +74,8 @@ public class ContactsController {
             } 
             Map<String, String> contactDetails = readFile(file);
 
+            logger.info("[Controller] Loading client's contact details to webpage");
+
             model.addAttribute("id", id);
             model.addAttribute("contactDetails", contactDetails);
             return "id";
@@ -81,6 +85,7 @@ public class ContactsController {
     public String getContacts(Model model) {
         Map<String, String> link_name = getLinksNNames();
         
+        logger.info("[Controller] Loading contacts to webpage");
         model.addAttribute("userList", link_name);
         return "contacts";
     }

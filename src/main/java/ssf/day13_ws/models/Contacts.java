@@ -4,6 +4,7 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Logger;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,6 +13,7 @@ import static ssf.day13_ws.Day13WsApplication.*;
 
 public class Contacts {
 
+    private static final Logger logger = Logger.getLogger(Contacts.class.getName());
     @NotNull(message="Name cannot be null")
     @NotEmpty(message="Name cannot be empty")
     @Size(min=3, max=64, message="Name must be between 3 and 64 characters")
@@ -58,16 +60,17 @@ public class Contacts {
         File newFile = new File(filePath);
         try {
             newFile.createNewFile();
-            System.out.printf("New file: %s created\n", newFile.getName());
+            logger.info("[Contacts] New file: %s created\n".formatted(newFile.getName()));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        System.out.printf("File has been created at: " + new File(filePath).getAbsolutePath());
+        logger.info("[Contacts] File has been created at: " + new File(filePath).getAbsolutePath());
         return new File(filePath).getAbsolutePath();
     }
 
     public static void writeData(Contacts contact, String file) {
         // Write data to file
+        logger.info("[Contacts] Writing client input to local directory");
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         try {
             Writer write = new FileWriter(new File(file));
@@ -83,9 +86,11 @@ public class Contacts {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        logger.info("[Contacts] Finished writing file");
     }
 
     public static Map<String, String> readFile(File file) {
+        logger.info("[Contacts] Reading client's file");
         Map<String, String> contactDetails = new HashMap<>();
         String[] details = {"Name", "Email", "Phone No.", "Date of Birth"};
         try {
@@ -103,10 +108,12 @@ public class Contacts {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        logger.info("[Contacts] Read finished");
         return contactDetails;
     }
 
     public static Map<String, String> getLinksNNames() {
+        logger.info("Scanning local directory");
         Map<String, String> link_name = new HashMap<>();
         File dir = new File(dataDir);
         File[] files = dir.listFiles();
@@ -123,6 +130,7 @@ public class Contacts {
             String id = file.getName().split("\\.")[0];
             link_name.put(name, "/contact/" + id);
         }
+        logger.info("[Contacts] Finished scan");
 
         return link_name;
     }
